@@ -1,0 +1,45 @@
+title: "Developing Data Products Project 3"
+author: "Roger Li"
+date: "7/13/2020"
+output: ioslides_presentation
+---
+## R Markdown
+This is an data analysis presentaion for the Developing Data Products.In this presentation, I will use the Mtcars dataset in R software. 
+
+The mtcars dataset was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+
+Source:**Henderson and Velleman (1981), Building multiple regression models interactively. Biometrics, 37, 391–411.**
+
+## Summary Statistics
+The summary of variables is shown below: 
+```{r sum}
+data(mtcars)
+summary(mtcars)
+```
+
+## Correlation 
+```{r cor,results='hide',warning=FALSE}
+library(corrplot)
+cormax<-cor(mtcars)
+```
+
+```{r cor2}
+corrplot(cormax, order = "FPC", method = "color", type = "lower", 
+     tl.cex = 0.8, tl.col = rgb(0, 0, 0))
+```
+From the correlation matrix, it seems that MPG is highly correlated with vs, drat and gear varible. 
+
+## Regression Analysis
+In this section, we use AIC to find the optimal multi-varible regression to explain the variation in MPG and the result was shown below:
+```{r reg,results='hide'}
+mdl<-lm(mpg~cyl+disp+hp+drat+wt+qsec+vs+am+gear+carb,mtcars)
+mdl<-step(mdl, direction = "both")
+```
+
+```{r reg2,echo=TRUE}
+summary(mdl)
+```
+
+## Shiny App
+Another presentation of the result of this analysis is done by using the Shiny App. The corresponsing can be found in the following github link:
+    **https://github.com/Rogerli2019/Developing-Data-Products-Project-3.git**
